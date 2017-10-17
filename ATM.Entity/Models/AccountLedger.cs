@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ATM.Entity.Models
 {
@@ -14,7 +15,8 @@ namespace ATM.Entity.Models
         public DateTime TransactionDT { get; set; }
         public Decimal Deposit { get; set; }
         public Decimal Withdraw { get; set; }
-
-        public virtual CheckingAccount AccountNumber { get; set; }
+        public int CheckingAccountId { get; set; }
+        [ForeignKey(nameof(CheckingAccountId))]
+        public virtual CheckingAccount CheckingAcc { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ATM.Data;
+using ATM.Entity.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +13,12 @@ namespace ATM.Web.Controllers
         // GET: BankAccount
         public ActionResult Index()
         {
-            return View();
+            MyBankDB ctx = new MyBankDB();
+            var bankAccounts = ctx.CheckingAccounts.ToList();
+            /*bankAccounts.Join(ctx.AccountLedgers, bA => bA.CheckingAccountId, aL => aL.CheckingAccountId, 
+                (acc, ledger) => new {FirstName=acc.FirstName, LastName=acc.LastName, balance =ledger.Deposit);
+    */        
+    return View(bankAccounts);
         }
 
         // GET: BankAccount/Details/5
@@ -28,11 +35,16 @@ namespace ATM.Web.Controllers
 
         // POST: BankAccount/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(CheckingAccount acct )
         {
             try
             {
-                // TODO: Add insert logic here
+                if (ModelState.IsValid)
+                { 
+                    MyBankDB ctx = new MyBankDB();
+                    ctx.CheckingAccounts.Add(acct);
+                    ctx.SaveChanges();
+                }
 
                 return RedirectToAction("Index");
             }
