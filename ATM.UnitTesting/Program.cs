@@ -19,9 +19,20 @@ namespace ATM.UnitTesting
             //DelegateExamples();
             //AsyncCallExample().RunSynchronously();
 
-            DymanicTypeExample(" Hello World ");
-            DymanicTypeExample(Math.Asin(89.89d));
-            DymanicTypeExample(DateTime.Now);
+            //DymanicTypeExample(" Hello World ");
+            //DymanicTypeExample(Math.Asin(89.89d));
+            //DymanicTypeExample(DateTime.Now);
+            Factory[] objProducts = new Factory[2];
+            objProducts[0] = new ProductCreateA();
+            objProducts[1] = new ProductCreateB();
+
+            foreach (var objProduct in objProducts)
+            {
+               IProduct product = objProduct.GetProduct();
+                product.GetDetails();
+            }
+            
+             
             Console.Read();
         }
         public static void DymanicTypeExample(dynamic val)

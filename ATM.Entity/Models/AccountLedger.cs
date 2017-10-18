@@ -12,9 +12,12 @@ namespace ATM.Entity.Models
     {
         [Required]
         public int AccountLedgerId { get; set; }
+        [Required]
         public DateTime TransactionDT { get; set; }
         public Decimal Deposit { get; set; }
         public Decimal Withdraw { get; set; }
+
+        [Required]
         public int CheckingAccountId { get; set; }
         [ForeignKey(nameof(CheckingAccountId))]
         public virtual CheckingAccount CheckingAcc { get; set; }

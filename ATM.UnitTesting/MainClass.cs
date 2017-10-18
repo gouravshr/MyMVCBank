@@ -12,19 +12,45 @@ namespace ATM.UnitTesting
         internal bool LoadText { get; set; }
     }
    
-}
-
-namespace ATM.SampleClasses
-{
-
-    public class SubClass
+   public interface IProduct
     {
+        void GetDetails();
+    }
 
-        public SubClass()
+    public class ProductA : IProduct
+    {
+        public void GetDetails()
         {
-            ATM.UnitTesting.MainClass mc = new ATM.UnitTesting.MainClass();
-            mc.LoadText = false;
+            Console.WriteLine("Product A");
+        }
+    }
+    public class ProductB : IProduct
+    {
+        public void GetDetails()
+        {
+            Console.WriteLine("Product B");
         }
     }
 
+    public abstract class Factory {
+
+        public abstract IProduct GetProduct();
+
+    }
+
+    public class ProductCreateA : Factory
+    {
+        public override IProduct GetProduct()
+        {
+            return new ProductA();
+        }
+    }
+
+    public class ProductCreateB : Factory
+    {
+        public override IProduct GetProduct()
+        {
+            return new ProductB();
+        }
+    }
 }

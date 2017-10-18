@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVC_Pratice.Models
 {
@@ -65,6 +66,19 @@ namespace MVC_Pratice.Models
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(50, MinimumLength = 2)]
+        [Column(TypeName = "varchar")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "First name should be at least 2 characters long!")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(50, MinimumLength = 2)]
+        [Column(TypeName = "varchar")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Last name should be at least 2 characters long!")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -98,6 +112,7 @@ namespace MVC_Pratice.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
 
         public string Code { get; set; }
     }

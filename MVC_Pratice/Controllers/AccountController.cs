@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC_Pratice.Models;
+using ATM.Entity.Models;
+using ATM.Data;
 
 namespace MVC_Pratice.Controllers
 {
@@ -153,8 +155,13 @@ namespace MVC_Pratice.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                
                 if (result.Succeeded)
                 {
+                    MyBankDB ctx = new MyBankDB();
+                    var chkAcc = new CheckingAccount { userId = user.Id, AccountNumber = (123456 + ctx.CheckingAccounts.Count() + 1).ToString().PadLeft(10, '0'), RountingNumber = "00000101" };
+                    ctx.CheckingAccounts.Add(chkAcc);
+                    ctx.SaveChanges();
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -434,6 +441,8 @@ namespace MVC_Pratice.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
+
+        public object BankDB { get; private set; }
 
         private void AddErrors(IdentityResult result)
         {

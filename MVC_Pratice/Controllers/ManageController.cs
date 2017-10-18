@@ -20,6 +20,10 @@ namespace MVC_Pratice.Controllers
         {
         }
 
+        protected override void OnAuthorization(AuthorizationContext filterContext)
+        {
+
+        }
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
