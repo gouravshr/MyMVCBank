@@ -159,9 +159,11 @@ namespace MVC_Pratice.Controllers
                 if (result.Succeeded)
                 {
                     MyBankDB ctx = new MyBankDB();
-                    var chkAcc = new CheckingAccount { userId = user.Id, AccountNumber = (123456 + ctx.CheckingAccounts.Count() + 1).ToString().PadLeft(10, '0'), RountingNumber = "00000101" };
+                    var chkAcc = new CheckingAccount { userId = user.Id, AccountNumber = (123456 + ctx.CheckingAccounts.Count() + 1).ToString().PadLeft(10, '0')
+                        , RountingNumber = "00000101",FirstName = model.FirstName,LastName=model.LastName };
                     ctx.CheckingAccounts.Add(chkAcc);
                     ctx.SaveChanges();
+                    UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, model.FirstName));
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

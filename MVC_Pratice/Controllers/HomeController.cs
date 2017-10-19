@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace MVC_Pratice.Controllers
 {
@@ -10,6 +11,9 @@ namespace MVC_Pratice.Controllers
     {
         public ActionResult Index()
         {
+            var manager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var name = User.Identity.Name;
+            ViewBag.UserName = name;
             return View();
         }
 

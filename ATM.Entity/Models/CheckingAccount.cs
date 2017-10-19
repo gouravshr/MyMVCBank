@@ -13,7 +13,21 @@ namespace ATM.Entity.Models
     {
         [Required]
         public int CheckingAccountId { get; set; }
-       
+
+        [Required]
+        [StringLength(50, MinimumLength = 2)]
+        [Column(TypeName = "varchar")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "First name should be at least 2 characters long!")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(50, MinimumLength = 2)]
+        [Column(TypeName = "varchar")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Last name should be at least 2 characters long!")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
         public string Address { get; set; }
       
         public string ContactNumber { get; set; }
