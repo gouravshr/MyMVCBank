@@ -12,6 +12,8 @@ namespace ATM.UnitTesting
     public delegate int Calculate(int x, int y);
     class Program
     {
+        static string name;
+        static DateTime? today;
         static void Main(string[] args)
         {
 
@@ -22,16 +24,19 @@ namespace ATM.UnitTesting
             //DymanicTypeExample(" Hello World ");
             //DymanicTypeExample(Math.Asin(89.89d));
             //DymanicTypeExample(DateTime.Now);
-            Factory[] objProducts = new Factory[2];
-            objProducts[0] = new ProductCreateA();
-            objProducts[1] = new ProductCreateB();
 
+            Console.WriteLine(name == null ? "Name is null" : name.ToString());
+            Console.WriteLine(today == null ? "Today is null" : today.ToString());
+            //Factory[] objProducts = new Factory[2];
+            //objProducts[0] = new ProductCreateA();
+            //objProducts[1] = new ProductCreateB();
+            /*
             foreach (var objProduct in objProducts)
             {
                IProduct product = objProduct.GetProduct();
                 product.GetDetails();
             }
-            
+            */
              
             Console.Read();
         }

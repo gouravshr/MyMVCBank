@@ -394,6 +394,39 @@ namespace MVC_Pratice.Controllers
             return View(model);
         }
 
+
+        public ActionResult Index()
+        {
+            // Populate Dropdown Lists
+            ApplicationDbContext context = new ApplicationDbContext();
+            var rolelist = context.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+            new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            ViewBag.Roles = rolelist;
+
+            var userlist = context.Users.OrderBy(u => u.UserName).ToList().Select(uu =>
+            new SelectListItem { Value = uu.UserName.ToString(), Text = uu.UserName }).ToList();
+            ViewBag.Users = userlist;
+
+            ViewBag.Message = "";
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateRole(FormCollection collection)
+        {
+            ApplicationDbContext context = new ApplicationDbContext();
+            context.Roles.Add(
+                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
+                {
+                    Name = collection["RoleName"].ToString()
+                });
+
+            context.SaveChanges();
+
+            return View("Index");
+        }
+
         //
         // POST: /Account/LogOff
         [HttpPost]
@@ -411,7 +444,7 @@ namespace MVC_Pratice.Controllers
         {
             return View();
         }
-
+                
         protected override void Dispose(bool disposing)
         {
             if (disposing)

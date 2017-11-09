@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using MVC_Pratice.Models;
+using ATM.Entity.Models;
 
 namespace MVC_Pratice
 {
