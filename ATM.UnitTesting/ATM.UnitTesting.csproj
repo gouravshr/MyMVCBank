@@ -40,6 +40,10 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\ATM.Data\bin\Debug\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="GitHub, Version=1.9.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GitHub.1.9.4\lib\netstandard2.0\GitHub.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ATM.Data\ATM.Data.csproj">
