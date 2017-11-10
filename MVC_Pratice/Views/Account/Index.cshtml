@@ -9,8 +9,6 @@
 </div>
 
 <div class="row col-sm-12 col-lg-12 col-md-12">
-
-
     <div class="col-sm-6 col-lg-6 col-md-6">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -26,7 +24,7 @@
                             </td>
                             <td class="col-sm-1 col-lg-1 col-md-1">
                                 <span onclick="return confirm('Are you sure to delete?')"><a href="/Roles/Delete?RoleName=@role.Text" class="delLink" style="color:red;">Delete</a></span> |
-                                @Html.ActionLink("Edit", "Edit", new { roleName = @role.Text })
+                                @Html.ActionLink("Edit", "EditRole", new { roleName = @role.Text })
                             </td>
                         </tr>
                     }
@@ -68,11 +66,9 @@
                     <p>User Name: @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...")</p>
                     <p>Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...")</p>
                     <p><input type="submit" value="Save" class="btn-primary" /></p>
-
                 }
             </div> <!-- End Panel Body-->
         </div> <!-- End Panel -->
-
 
         <div class="panel panel-primary">
             <div class="panel-heading">

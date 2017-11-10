@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MVC_Pratice.Models;
@@ -407,24 +408,73 @@ namespace MVC_Pratice.Controllers
             new SelectListItem { Value = uu.UserName.ToString(), Text = uu.UserName }).ToList();
             ViewBag.Users = userlist;
 
-            ViewBag.Message = "";
+            //ViewBag.Message = "";
 
+            return View();
+        }
+
+        public ActionResult CreateRole() {
             return View();
         }
 
         [HttpPost]
         public ActionResult CreateRole(FormCollection collection)
         {
-            ApplicationDbContext context = new ApplicationDbContext();
-            context.Roles.Add(
-                new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
-                {
-                    Name = collection["RoleName"].ToString()
-                });
+            try
+            {
+                ApplicationDbContext context = new ApplicationDbContext();
+                context.Roles.Add(
+                    new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
+                    {
+                        Name = collection["RoleName"].ToString()
+                    });
 
-            context.SaveChanges();
+                context.SaveChanges();
+                ViewBag.Message = "Role created successfully !";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = "Error: " + ex.Message;
+            }
 
+            return View();
+        }
+
+        public ActionResult GetRoles(string userName)
+        {
+            ApplicationDbContext ctx = new ApplicationDbContext();
+            var user = ctx.Users.Where(usr => usr.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
+            var userStore = new UserStore<ApplicationUser>(ctx);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            var roleList = userManager.GetRoles(user.Id);
+            ViewBag.RolesForThisUser = roleList;
+            ViewBag.Message = "Roles retrieved successfully !";
             return View("Index");
+        }
+
+        public ActionResult DeleteRole(string roleName)
+        {
+            ApplicationDbContext ctx = new ApplicationDbContext();
+            var role = ctx.Roles.Where(rl => rl.Name.Equals(roleName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            if (role != null)
+            {
+                ctx.Roles.Remove(role);
+                ctx.SaveChanges();
+                ViewBag.Messsage = "Role has been deleted";
+            }
+            else
+                ViewBag.Messsage = "Cannot delete the role";
+            
+            return View("Index");
+        }
+
+        public ActionResult EditRole(string roleName)
+        {
+            ApplicationDbContext ctx = new ApplicationDbContext();
+            var role = ctx.Roles.Where(rl => rl.Name.Equals(roleName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+            return View(role);
         }
 
         //
