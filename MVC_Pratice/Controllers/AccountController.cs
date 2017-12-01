@@ -477,6 +477,37 @@ namespace MVC_Pratice.Controllers
             return View(role);
         }
 
+        [HttpPost]
+        public ActionResult EditRole(FormCollection collection)
+        {
+            IdentityRole role=null;
+            try
+            {
+                ApplicationDbContext context = new ApplicationDbContext();
+                string name = collection["Name"].ToString();
+                string Id = collection["Id"].ToString();
+                role = context.Roles.Where(r => r.Name == name).FirstOrDefault();
+                if (role != null)
+                    throw new Exception("Role is already available!");
+                else
+                    role = context.Roles.Where(r => r.Id == Id).FirstOrDefault();
+                if (role != null)
+                {
+                    role.Name = name;
+                    context.SaveChanges();
+                    ViewBag.Message = "Role edit successfully !";
+                    return RedirectToAction("Index");
+                }
+                else
+                    throw new Exception("Role doesn't exists or deleted!");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = "Error: " + ex.Message;
+            }
+            return View(role);
+        }
+
         //
         // POST: /Account/LogOff
         [HttpPost]
